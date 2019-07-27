@@ -10,8 +10,8 @@ app.use(bodyparser.json());
 
 var mysqlConnection = mySql.createConnection({
     host: 'localhost',
-    user:'root',
-    password:'',
+    user:'raj',
+    password:'1234',
     database :'employeedb',
     multipleStatements: true
 
@@ -71,25 +71,47 @@ app.delete('/employeedb/:id',(req,res)=>{
 });
 
 //Writa a new data in mysql database
-app.post('/employeedb', (req, res) => {
+/* app.post('/employeedb/', (req, res) => {
     let emp = req.body;
     var sql = "SET @EmplyID = ?;SET @Name = ?;SET @Salary = ?;SET @EmplyCODE= ?; \
-    CALL EmplyoeeAddOrEdit(@EmplyID,@Name,@Salary,@EmplyCODE);";
+    CALL EmployeeAddOrEdit(@EmplyID,@Name,@Salary,@EmplyCODE);";
     mysqlConnection.query(sql, [emp.EmplyID, emp.Name, emp.Salary, emp.EmplyCODE], (err, rows, fields) => {
         if (!err)
         rows.forEach(element => {
             if(element.constructor == Array)
             res.send('Inserted employee id : '+element[0].EmplyID);
+            res.send('Inserted employee id : '+element[1].Name);
+            res.send('Inserted employee id : '+element[1].Salary);
+            res.send('Inserted employee id : '+element[1].EmplyCODE);
+            res.send(rows);
         });
+        
+        else
+            console.log(err);
+    })
+}); */
+
+
+
+app.post('/employeedb/:id', (req, res) => {
+    let emp = req.body;
+    var sql = "INSERT INTO `employeedb` (`EmplyID`, `Name`, `Salary`, `EmplyCODE`) VALUES ('?', '?', '?', '?');";
+    mysqlConnection.query(sql, (err, rows, fields) => {
+        if (!err)
+
+        res.send(rows);
+        
         else
             console.log(err);
     })
 });
+
+
 //Update an exsiting data in mysql database
 app.put('/employeedb', (req, res) => {
     let emp = req.body;
     var sql = "SET @EmplyID = ?;SET @Name = ?;SET @Salary = ?;SET @EmplyCODE= ?; \
-    CALL EmplyoeeAddOrEdit(@EmplyID,@Name,@Salary,@EmplyCODE);";
+    CALL EmployeeAddOrEdit(@EmplyID,@Name,@Salary,@EmplyCODE);";
     mysqlConnection.query(sql, [emp.EmplyID, emp.Name, emp.Salary, emp.EmplyCODE], (err, rows, fields) => {
         if (!err)
             res.send('Updated successfully');
