@@ -1,5 +1,8 @@
 //Example
 // Use this for Add and Edit the values from the client side
+
+/***************************************************************\
+
 BEGIN
 IF  = 0 THEN
 INSERT INTO employeedb(Name, Salary, EmplyCODE)
@@ -14,3 +17,5 @@ WHERE EmplyID = ;
 END IF;
 SELECT  AS 'EmplyID';
 END
+
+/****************************************************************\
